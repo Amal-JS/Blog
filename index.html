@@ -22,6 +22,7 @@
 
   .form-control:focus {
     border: 2px solid green;
+    font-weight: 700;
     
     
     /* You can adjust the border color and style as needed */
@@ -175,7 +176,7 @@
 <!-- Modal  -->
 <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered">
-    <div class="modal-content">
+    <div class="modal-content bg-dark">
       <div class="modal-header ">
         
         <button type="button" class="btn-close bg-danger" data-bs-dismiss="modal" aria-label="Close"></button>
@@ -185,7 +186,7 @@
 
         <form class="form text-center bg-dark border-3 ">
           <h5 class="modal-title text-center mb-3 pt-2 text-white" id="exampleModalLabel">Sign Up</h5>
-          <div class="p-2" style="border-top:1px solid green;border-left:1px solid green; box-shadow: 10px 10px 15px rgba(0, 0, 0, 0.5);"">
+          <div class="p-2" style="border-top:1px solid green;border-left:1px solid green;box-shadow: -10px -10px 45px rgba(255, 255, 255, 0.5) inset;">
 
           
           <div class="mb-3 d-flex" >
@@ -226,16 +227,37 @@
 
 
 <!-- Modal  -->
-<div class="modal fade" id="signInModal" tabindex="-1" aria-labelledby="signInModal" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered">
-    <div class="modal-content">
+<div class="modal fade " id="signInModal" tabindex="-1" aria-labelledby="signInModal" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered ">
+    <div class="modal-content bg-dark" >
       <div class="modal-header ">
         
         <button type="button" class="btn-close bg-danger" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
 
+        
+        <form class="form text-center bg-dark border-3 ">
+          <h5 class="modal-title text-center mb-3 pt-2 text-white" id="signInModal">Sign In</h5>
+           <div class="p-2" style="border-top: 1px solid green; box-shadow: -10px -10px 45px rgba(255, 255, 255, 0.5) inset;"">
+            
 
+          
+          <div class="mb-3 d-flex" >
+            <label for="exampleInputEmail1" class="form-label m-2 w-50">Username</label>
+            <input type="email" class="form-control m-2 " id="signInUsername" aria-describedby="emailHelp" name="signInUsername">
+          
+          </div>
+        
+          <div class="mb-3 d-flex" >
+            <label for="exampleInputPassword1" class="form-label m-2 w-50">Password</label>
+            <input type="password" class="form-control m-2 " id="password" name="password">
+          </div>
+          
+          <button type="submit" class="btn btn-success">Sign in</button>
+
+        </div>
+        </form>
         
 
       </div>
