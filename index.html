@@ -78,7 +78,10 @@
                       </li>
 
                       <li class="nav-item">
-                        <a class="btn btn-outline-light me-5 " aria-current="page" href="#">Log out</a>
+                        <a class="btn btn-outline-light me-5 " data-bs-toggle="modal"  data-bs-target="#logoutModal">Log out</a>
+                      
+
+                        
                       </li>
                      
                     </ul>
@@ -275,6 +278,28 @@
 </div>
 
 
+<!-- Log out Modal-->
+
+<!-- Button trigger modal -->
+
+
+<!-- Modal -->
+<div class="modal fade" id="logoutModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content bg-dark">
+      <div class="modal-header">
+        <h5 class="modal-title text-white" id="exampleModalLabel">Are you sure want to logout??</h5>
+        <button type="button" class="btn-close bg-danger" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      
+      <div class="modal-footer">
+        <a class="btn btn-danger" >Yes</a>
+        <button type="button" class="btn btn-success" data-bs-dismiss="modal">Nop</button>
+       
+      </div>
+    </div>
+  </div>
+</div>
 
 
 
