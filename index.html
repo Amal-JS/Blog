@@ -326,7 +326,10 @@
 
 document.addEventListener('DOMContentLoaded', function() {
   // Get input element
-  const usernameInput = document.getElementById('signInUsername');
+  const usernameInput = document.getElementById('username');
+  const emailInput = document.querySelector('#email')
+  const password1 = document.querySelector('#password1')
+  const password2 = document.querySelector('#password2')
 
   // Function to show a toast message
   function showToast(fieldname, value) {
@@ -366,12 +369,90 @@ document.addEventListener('DOMContentLoaded', function() {
     toast.show();
   }
 
-  // Add a keyup event listener to the input field
-  usernameInput.addEventListener('keyup', () => {
-    const fieldname = 'Username'; // Replace with the appropriate field name
-    const value = usernameInput.value; // Get the input value
-    showToast(fieldname, value);
-  });
+  usernameInput.addEventListener("blur", () => {
+          const fieldname = "Username"; // Replace with the appropriate field name
+          const value = usernameInput.value; // Get the input value
+          console.log(value)
+          if (value !== "") {
+            
+            if (!/^[a-zA-Z0-9]+$/.test(value)) {
+              showToast(
+                fieldname,
+                "Use only alphabets and numbers in the username",
+                "red",
+                "Validation"
+              );
+            }
+            if (value.length < 5) {
+              console.log('-----------------',value)
+              showToast(
+                fieldname,
+                "Username should be at least 5 characters long",
+                "red",
+                "Validation"
+              );
+            }
+          }
+        }); 
+
+
+        emailInput.addEventListener("blur", () => {
+          const fieldname = "Email"; // Replace with the appropriate field name
+          const value = emailInput.value; // Get the input value
+
+          if (value !== "") {
+    if (!/^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$/.test(value)) {
+      showToast(
+        fieldname,
+        "Please enter a valid email address",
+        "red",
+        "Validation"
+      );
+    }
+  }
+        });
+
+
+
+        password1.addEventListener("blur", () => {
+          const fieldname = "Password"; // Replace with the appropriate field name
+          const value = password1.value; // Get the input value
+
+          if (password1.value !== "") {
+            
+            if (password1.value.length < 5) {
+              showToast(
+                fieldname,
+                "Password should be at least 5 characters long",
+                "red",
+                "Validation"
+              );
+            }
+          }
+        });
+
+
+
+        password2.addEventListener("blur", () => {
+          const fieldname = "Confirm Password"; // Replace with the appropriate field name
+          const value = password2.value; // Get the input value
+
+          if (password2.value !== "") {
+            
+            if (password2.value !== password1.value) {
+              showToast(
+                fieldname,
+                "Passwords not matching",
+                "red",
+                "Validation"
+              );
+            }
+           
+          }
+        });
+
+
+  
 
 });
 </script>
