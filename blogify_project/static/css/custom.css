@@ -51,3 +51,7 @@
   .checked {
   color: orange;
 }
+
+.custom-shadow {
+  box-shadow: 20px 8px 10px rgba(0, 0, 0, 0.2); /* Customize the shadow values as needed */
+}
