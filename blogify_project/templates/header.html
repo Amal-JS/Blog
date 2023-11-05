@@ -12,26 +12,29 @@
               <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                   <li class="nav-item">
-                    <a class="btn btn-outline-light me-5 " aria-current="page" href="#">Home</a>
+                    <a class="btn btn-outline-light me-5 " aria-current="page" href="/">Home</a>
                   </li>
                   
-                  <li class="nav-item">
-                    <a class="btn btn-outline-light me-5 " aria-current="page" href="#">Sign In</a>
-                  </li>
-
-                  <li class="nav-item">
-                    <a class="btn btn-outline-light me-5 " aria-current="page" href="#">Sign Up</a>
-                  </li>
+                  {% if request.user.is_authenticated %}
 
                   
                   <li class="nav-item">
-                    <a class="btn btn-outline-light me-5 " aria-current="page" >Hello User</a>
+                    <a class="btn btn-outline-light me-5 " aria-current="page" >Hello {{request.user}}</a>
                   </li>
 
                   <li class="nav-item">
-                    <a class="btn btn-outline-light me-5 " aria-current="page" href="#">Log out</a>
+                    <a class="btn btn-outline-light me-5 " aria-current="page" href="#" data-bs-toggle="modal" data-bs-target="#logoutModal">Log out</a>
                   </li>
-                 
+                  {% else %}
+                  
+                  <li class="nav-item">
+                    <a class="btn btn-outline-light me-5 " aria-current="page" href="#" data-bs-toggle="modal" data-bs-target="#signInModal">Sign In</a>
+                  </li>
+
+                  <li class="nav-item">
+                    <a class="btn btn-outline-light me-5 " aria-current="page" href="#" data-bs-toggle="modal" data-bs-target="#signUpModal">Sign Up</a>
+                  </li>
+                  {% endif %}
                 </ul>
                 <form class="d-flex">
                   <input class="form-control me-2" type="search" placeholder="Search  posts..." aria-label="Search">
@@ -41,4 +44,132 @@
             </div>
           </nav>
     </div> 
+</div>
+
+ 
+<!--Sign up modal-->
+
+
+
+<!-- Modal  -->
+<div class="modal fade" id="signUpModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content bg-dark">
+      <div class="modal-header ">
+        
+        <button type="button" class="btn-close bg-danger" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+
+
+        <form class="form text-center bg-dark border-3 ">
+          <h5 class="modal-title text-center mb-3 pt-2 text-white" id="exampleModalLabel">Sign Up</h5>
+          <div class="p-2" style="border-top:1px solid green;border-left:1px solid green;box-shadow: -10px -10px 45px rgba(255, 255, 255, 0.5) inset;">
+
+          
+          <div class="mb-3 d-flex" >
+            <label for="exampleInputEmail1" class="form-label m-2 w-50">Username</label>
+            <input type="email" class="form-control m-2 " id="username" aria-describedby="emailHelp" name="username">
+          
+          </div>
+          <div class="mb-3 d-flex" >
+            <label for="exampleInputEmail1" class="form-label m-2 w-50">Email address</label>
+            <input type="email" class="form-control m-2 " id="email" name='email' aria-describedby="emailHelp">
+            
+          </div>
+          <div class="mb-3 d-flex" >
+            <label for="exampleInputPassword1" class="form-label m-2 w-50">Password</label>
+            <input type="password" class="form-control m-2 " id="password1" name="password1">
+          </div>
+          <div class="mb-3 d-flex" >
+            <label for="exampleInputPassword1" class="form-label m-2 w-50">Confirm Password</label>
+            <input type="password" class="form-control m-2 " id="password2" name="password2">
+          </div>
+          <button type="submit" class="btn btn-success">Sign Up</button>
+
+        </div>
+        </form>
+        
+
+      </div>
+ 
+    </div>
+  </div>
+</div>
+
+
+
+
+<!--Sign in modal-->
+
+
+
+<!-- Modal  -->
+<div class="modal fade " id="signInModal" tabindex="-1" aria-labelledby="signInModal" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered ">
+    <div class="modal-content bg-dark" >
+      <div class="modal-header ">
+        
+        <button type="button" class="btn-close bg-danger" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+
+        
+        <form class="form text-center bg-dark border-3 ">
+          <h5 class="modal-title text-center mb-3 pt-2 text-white" id="signIn">Sign In</h5>
+           <div class="p-2" style="border-top: 1px solid green; box-shadow: -10px -10px 45px rgba(255, 255, 255, 0.5) inset;"">
+            
+
+          
+          <div class="mb-3 d-flex" >
+            <label for="exampleInputEmail1" class="form-label m-2 w-50">Username</label>
+            <input type="email" class="form-control m-2 " id="signInUsername" aria-describedby="emailHelp" name="signInUsername">
+          
+          </div>
+        
+          <div class="mb-3 d-flex" >
+            <label for="exampleInputPassword1" class="form-label m-2 w-50">Password</label>
+            <input type="password" class="form-control m-2 " id="password" name="password">
+          </div>
+          
+          <button type="submit" class="btn btn-success">Sign in</button>
+
+        </div>
+        </form>
+        
+
+      </div>
+ 
+    </div>
+  </div>
+</div>
+
+
+<!-- Log out Modal-->
+
+<!-- Modal -->
+<div class="modal fade" id="logoutModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content bg-dark">
+      <div class="modal-header">
+        <h5 class="modal-title text-white" id="exampleModalLabel">Are you sure want to logout??</h5>
+        <button type="button" class="btn-close bg-danger" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      
+      <div class="modal-footer">
+        <a class="btn btn-danger" >Yes</a>
+        <button type="button" class="btn btn-success" data-bs-dismiss="modal">Nop</button>
+       
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+<div class="toast-container align-items-center text-white position-absolute top-0 end-0 p-3 ">
+
+
+  
 </div>

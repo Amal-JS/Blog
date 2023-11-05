@@ -5,6 +5,7 @@ class Post(models.Model):
     post_name = models.CharField(max_length=100)
     post_desc = models.TextField()
     created   = models.DateTimeField(auto_now_add=True)
+    rating = models.IntegerField(default=0)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     image = models.ImageField(upload_to='post_images',null=True,blank=True)
 

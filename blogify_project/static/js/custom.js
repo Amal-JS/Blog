@@ -1,6 +1,21 @@
 
 document.addEventListener('DOMContentLoaded', function() {
-    var fileInput = document.getElementById('validatedCustomFile');
+
+ 
+  //slider in home page 
+  if (window.location.pathname === '/')
+  {
+ 
+   // Get the carousel element
+   var carousel = document.getElementById('imageSlider');
+
+   // Create a new Carousel instance
+   var myCarousel = new bootstrap.Carousel(carousel, {
+       interval: 1000 // Auto slide every 2 seconds
+   });
+
+
+   var fileInput = document.getElementById('validatedCustomFile');
     var fileLabel = document.querySelector('.custom-file-label');
 
 
@@ -22,6 +37,8 @@ document.addEventListener('DOMContentLoaded', function() {
             fileLabel.textContent = 'Add images if any...';
         }
     });
+  }
+    
 
 // Get input element
 const usernameInput = document.getElementById('username');

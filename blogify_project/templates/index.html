@@ -1,17 +1,36 @@
+
 {% extends 'base.html' %}
+{% load static %}
 {% block title %} Home {% endblock %}
    
 {% block content %}
     
     
     <div class="container mt-2 ">
-        <div class="row mb-3" style="height:455px;background-color: black;box-shadow: 10px 10px 15px rgba(0, 0, 0, 0.5);">
-            <div class="col-3">
-
+        <div class="row mb-3" style="height:455px;box-shadow: 10px 10px 15px rgba(0, 0, 0, 0.5);">
+          <div id="imageSlider" class="carousel slide" data-ride="carousel">
+            <div class="carousel-inner">
+                {% for post in posts|slice:":5" %}
+                    <div class="carousel-item {% if forloop.first %}active{% endif %}" style="max-height: 450px;">
+                    <div class="d-flex">
+                      <div class="w-50 d-flex justify-content-center align-items-center">
+                        <div class="p-3">
+                          <p class="display-2" style="font-family: cursive;">{{post.post_name}}</p>
+                          <p class="display-6 text-end" style="font-family: cursive;">written by: <span class="text-danger text-decoration-underline">{{post.user}}</span></p>
+                        </div>
+                      </div>
+                      <div class="w-50">
+                        {% if post.image %}
+                        <img src="{{ post.image.url }}" class="d-block w-100 " alt="Image" >
+                    {% endif %}
+                      </div>
+                    </div>
+                       
+                    </div>
+                {% endfor %}
             </div>
-            <div class="col-9">
-
-            </div>
+        </div>
+        
         </div>
         <!---End of div after the slider-->
 
@@ -55,23 +74,39 @@
           <p class="display-3 mb-5" >Trending Posts</p>
 
           <!--post-->
+          {% for post in posts %}
           <div class="col-3 p-4 shadow-lg  mb-5 bg-body rounded" style="min-height:400px">
             <div class="card custom" style="width: 18rem;">
-              <img class="card-img-top" src="sample.jpg" alt="Card image cap">
+              <img class="card-img-top" src="{% if post.image != '' %}{{post.image.url}} {% else %} {% static 'images/default.jpg' %} {% endif %}" alt="Card image cap" style="height:200px;">
               <div class="card-body " >
-                
-                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                <p class="card-title fw-bolder">{{post.post_name}}</p>
+                <p class="card-text">{{post.post_desc|slice:':100'}}</p>
                 <h5 class="card-title text-end">
-                  Author
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-fill text-dark mx-1" viewBox="0 0 16 16">
+                    <path d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H3Zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z"/>
+                  </svg>
+                  {{post.user}}
                 </h5>
                 <div class="text-center">
-                  <a href="#" class="btn btn-outline-secondary">View post</a>
+                  <a href="#" class="btn btn-outline-secondary mt-3">View post</a>
                 </div>
                 
               </div>
             </div>
           </div>
 
+
+
+          {% empty %}
+
+
+          <div >
+            <p class="display-2"> No posts yet</p>
+          </div>
+          {% endfor %}
+
+    
+
         </div>
 
     </div>
@@ -79,133 +114,6 @@
 
 
 
-
-<!--Sign up modal-->
-
-
-
-<!-- Modal  -->
-<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered">
-    <div class="modal-content bg-dark">
-      <div class="modal-header ">
-        
-        <button type="button" class="btn-close bg-danger" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-
-
-        <form class="form text-center bg-dark border-3 ">
-          <h5 class="modal-title text-center mb-3 pt-2 text-white" id="exampleModalLabel">Sign Up</h5>
-          <div class="p-2" style="border-top:1px solid green;border-left:1px solid green;box-shadow: -10px -10px 45px rgba(255, 255, 255, 0.5) inset;">
-
-          
-          <div class="mb-3 d-flex" >
-            <label for="exampleInputEmail1" class="form-label m-2 w-50">Username</label>
-            <input type="email" class="form-control m-2 " id="username" aria-describedby="emailHelp" name="username">
-          
-          </div>
-          <div class="mb-3 d-flex" >
-            <label for="exampleInputEmail1" class="form-label m-2 w-50">Email address</label>
-            <input type="email" class="form-control m-2 " id="email" name='email' aria-describedby="emailHelp">
-            
-          </div>
-          <div class="mb-3 d-flex" >
-            <label for="exampleInputPassword1" class="form-label m-2 w-50">Password</label>
-            <input type="password" class="form-control m-2 " id="password1" name="password1">
-          </div>
-          <div class="mb-3 d-flex" >
-            <label for="exampleInputPassword1" class="form-label m-2 w-50">Confirm Password</label>
-            <input type="password" class="form-control m-2 " id="password2" name="password2">
-          </div>
-          <button type="submit" class="btn btn-success">Sign Up</button>
-
-        </div>
-        </form>
-        
-
-      </div>
- 
-    </div>
-  </div>
-</div>
-
-
-
-
-<!--Sign in modal-->
-
-
-
-<!-- Modal  -->
-<div class="modal fade " id="signInModal" tabindex="-1" aria-labelledby="signInModal" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered ">
-    <div class="modal-content bg-dark" >
-      <div class="modal-header ">
-        
-        <button type="button" class="btn-close bg-danger" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-
-        
-        <form class="form text-center bg-dark border-3 ">
-          <h5 class="modal-title text-center mb-3 pt-2 text-white" id="signInModal">Sign In</h5>
-           <div class="p-2" style="border-top: 1px solid green; box-shadow: -10px -10px 45px rgba(255, 255, 255, 0.5) inset;"">
-            
-
-          
-          <div class="mb-3 d-flex" >
-            <label for="exampleInputEmail1" class="form-label m-2 w-50">Username</label>
-            <input type="email" class="form-control m-2 " id="signInUsername" aria-describedby="emailHelp" name="signInUsername">
-          
-          </div>
-        
-          <div class="mb-3 d-flex" >
-            <label for="exampleInputPassword1" class="form-label m-2 w-50">Password</label>
-            <input type="password" class="form-control m-2 " id="password" name="password">
-          </div>
-          
-          <button type="submit" class="btn btn-success">Sign in</button>
-
-        </div>
-        </form>
-        
-
-      </div>
- 
-    </div>
-  </div>
-</div>
-
-
-<!-- Log out Modal-->
-
-<!-- Modal -->
-<div class="modal fade" id="logoutModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered">
-    <div class="modal-content bg-dark">
-      <div class="modal-header">
-        <h5 class="modal-title text-white" id="exampleModalLabel">Are you sure want to logout??</h5>
-        <button type="button" class="btn-close bg-danger" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      
-      <div class="modal-footer">
-        <a class="btn btn-danger" >Yes</a>
-        <button type="button" class="btn btn-success" data-bs-dismiss="modal">Nop</button>
-       
-      </div>
-    </div>
-  </div>
-</div>
-
-
-
-
-<div class="toast-container align-items-center text-white position-absolute top-0 end-0 p-3 ">
-
-
-  
-</div>
 
 
 {% endblock %}
