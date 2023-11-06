@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+{% load static %}
+    {% block title %} Search results {% endblock %}
+    
+{% block content %}
+    
+    
+<div class="container">
+    <div class="row">
+        
+            <!--post-->
+          {% for post in posts %}
+          <div class="col-3 p-4 shadow-lg  mb-5 bg-body rounded" style="min-height:400px">
+            <div class="card custom" style="width: 18rem;">
+              <img class="card-img-top" src="{% if post.image != '' %}{{post.image.url}} {% else %} {% static 'images/default.jpg' %} {% endif %}" alt="Card image cap" style="height:200px;">
+              <div class="card-body " >
+                <p class="card-title fw-bolder">{{post.post_name}}</p>
+                <p class="card-text">{{post.post_desc|slice:':100'}}</p>
+                <h5 class="card-title text-end">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-fill text-dark mx-1" viewBox="0 0 16 16">
+                    <path d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H3Zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z"/>
+                  </svg>
+                  {{post.user}}
+                </h5>
+                <div class="text-center">
+                  <a href="{% url 'post' post.id %}" class="btn btn-outline-secondary mt-3">View post</a>
+                </div>
+                
+              </div>
+            </div>
+        
+          {% empty %}
+
+          <p class="display-1 text-center mt-2"><span class='text-danger'>0</span> results found....</p>
+          {% endfor %}
+        </div>
+    </div>
+</div>
+
+
+
+{% endblock %}

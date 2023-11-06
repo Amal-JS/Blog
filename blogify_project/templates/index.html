@@ -38,12 +38,15 @@
 
         <div class="row mb-2 mt-5">
             <div class="col-12" >
+              {% if request.user.is_authenticated %}
                 <p>
                     
                     <button class="btn btn-outline-success waves-effect" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample" style="box-shadow: 10px 10px 15px  rgba(0, 0, 0, 0.5);">
                    Create a post..
                     </button>
                   </p>
+
+              {% endif %}
                   <div class="collapse" id="collapseExample">
                     <div class="card card-body p-2" style="border:1px solid  black;">
                     
