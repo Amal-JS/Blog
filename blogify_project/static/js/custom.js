@@ -1,4 +1,43 @@
 
+// Function to show a toast message
+function showToast(activity="Validation",fieldname, value,bgColor='bg-danger') {
+
+  const toastContainer = document.querySelector('.toast-container');
+  const toastElement = document.createElement('div');
+  toastElement.classList.add('toast');
+  toastElement.setAttribute('role', 'alert');
+  toastElement.setAttribute('aria-live', 'assertive');
+  toastElement.setAttribute('aria-atomic', 'true');
+  
+  toastElement.innerHTML = `
+  <div class="toast-header  ${bgColor}" >
+  
+  <strong class="me-auto text-white">${activity}</strong>
+  <div class="d-flex justify-content-evenly">
+    <small class="text-white mx-3">just now</small>
+  <button type="button" class="btn-close btn-close-white me-2 m-auto fw-3" data-bs-dismiss="toast" aria-label="Close"></button>
+  
+  </div>
+  
+  
+  </div>
+  <div class="toast-body  ${bgColor}">
+  
+  ${fieldname} : ${value}
+  
+  
+  
+  </div>
+  
+  `;
+  
+  toastContainer.appendChild(toastElement);
+  
+  const toast = new bootstrap.Toast(toastElement);
+  toast.show();
+  }
+  
+
 document.addEventListener('DOMContentLoaded', function() {
 
  
@@ -46,43 +85,6 @@ const emailInput = document.querySelector('#email')
 const password1 = document.querySelector('#password1')
 const password2 = document.querySelector('#password2')
 
-// Function to show a toast message
-function showToast(fieldname, value) {
-
-const toastContainer = document.querySelector('.toast-container');
-const toastElement = document.createElement('div');
-toastElement.classList.add('toast');
-toastElement.setAttribute('role', 'alert');
-toastElement.setAttribute('aria-live', 'assertive');
-toastElement.setAttribute('aria-atomic', 'true');
-bgColor='bg-danger'
-toastElement.innerHTML = `
-<div class="toast-header  ${bgColor}" >
-
-<strong class="me-auto text-white">Validation</strong>
-<div class="d-flex justify-content-evenly">
-  <small class="text-white mx-3">just now</small>
-<button type="button" class="btn-close btn-close-white me-2 m-auto fw-3" data-bs-dismiss="toast" aria-label="Close"></button>
-
-</div>
-
-
-</div>
-<div class="toast-body  ${bgColor}">
-
-${fieldname} : ${value}
-
-
-
-</div>
-
-`;
-
-toastContainer.appendChild(toastElement);
-
-const toast = new bootstrap.Toast(toastElement);
-toast.show();
-}
 
 usernameInput.addEventListener("blur", () => {
   const fieldname = "Username"; // Replace with the appropriate field name
@@ -92,19 +94,21 @@ usernameInput.addEventListener("blur", () => {
     
     if (!/^[a-zA-Z0-9]+$/.test(value)) {
       showToast(
+        "Validation",
         fieldname,
         "Use only alphabets and numbers in the username",
-        "red",
-        "Validation"
+        
+        
       );
     }
     if (value.length < 5) {
       console.log('-----------------',value)
       showToast(
+        "Validation",
         fieldname,
         "Username should be at least 5 characters long",
-        "red",
-        "Validation"
+        
+        
       );
     }
   }
@@ -118,10 +122,11 @@ emailInput.addEventListener("blur", () => {
   if (value !== "") {
 if (!/^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$/.test(value)) {
 showToast(
+  "Validation",
 fieldname,
 "Please enter a valid email address",
-"red",
-"Validation"
+
+
 );
 }
 }
@@ -137,10 +142,11 @@ password1.addEventListener("blur", () => {
     
     if (password1.value.length < 5) {
       showToast(
+        "Validation",
         fieldname,
         "Password should be at least 5 characters long",
-        "red",
-        "Validation"
+        
+        
       );
     }
   }
@@ -156,10 +162,10 @@ password2.addEventListener("blur", () => {
     
     if (password2.value !== password1.value) {
       showToast(
+        "Validation",
         fieldname,
         "Passwords not matching",
-        "red",
-        "Validation"
+      
       );
     }
    
@@ -196,4 +202,33 @@ document.addEventListener('DOMContentLoaded', () => {
        
     });
     }
+});
+
+//==============================sign in ===================================================
+document.addEventListener('DOMContentLoaded', () => {
+  document.getElementById('signInModal').addEventListener('submit', (event) => {
+    event.preventDefault();
+console.log('comes here')
+    const username = document.querySelector('#signInUsername').value;
+    const password = document.querySelector('#password').value; // Corrected the selector
+
+    if (username !== '' && password !== '') { // Use "&&" to check both conditions
+      fetch(`/sign_in/?username=${username}&password=${password}`) // Use "&" to separate parameters
+        .then((res) => res.json()) // Removed extra braces
+        .then((res) => {
+          if (res.userLogin) {
+            location.reload(); // Corrected the window reload
+          } else {
+            showToast('Login', 'Credentials', 'Invalid credentials'); // Corrected the function call
+          }
+        });
+    }
+
+    if (username === '') {
+      showToast('Login', 'Username', "Can't leave empty");
+    }
+    if (password === '') {
+      showToast('Login', 'Password', "Can't leave empty");
+    }
+  });
 });
