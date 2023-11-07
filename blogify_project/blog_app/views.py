@@ -1,7 +1,7 @@
 
 from django.http import  JsonResponse
-from django.shortcuts import render
-from . models import Post,Comment
+from django.shortcuts import redirect, render
+from . models import Post,Comment,User
 from django.db.models import F
 from django.contrib.auth import authenticate,login,logout
 
@@ -49,4 +49,7 @@ def sign_in(request):
 
 
 def sign_out(request):
-    return HttpResponse()
+    
+    logout(request)
+    return redirect('index')
+   
