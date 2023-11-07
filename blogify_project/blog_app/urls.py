@@ -7,6 +7,7 @@ path('post/<int:id>/',views.post,name='post'),
 path('search/',views.search,name="search"),
 
 path('sign_in/',views.sign_in,name='signin'),
-path('sign_out/',views.sign_out,name='signout')
+path('sign_out/',views.sign_out,name='signout'),
+path('signup/',views.sign_up)
 
 ]

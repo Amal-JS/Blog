@@ -63,7 +63,8 @@
       <div class="modal-body">
 
 
-        <form class="form text-center bg-dark border-3 ">
+        <form class="form text-center bg-dark border-3 " id="signupmodal" method="post">
+          {% csrf_token %}
           <h5 class="modal-title text-center mb-3 pt-2 text-white" id="exampleModalLabel">Sign Up</h5>
           <div class="p-2" style="border-top:1px solid green;border-left:1px solid green;box-shadow: -10px -10px 45px rgba(255, 255, 255, 0.5) inset;">
 

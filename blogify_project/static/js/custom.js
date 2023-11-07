@@ -181,7 +181,8 @@ password1.addEventListener("blur", () => {
       flag=1;
     }
      // Check if the password contains at least one numeric character
-  if (!/\d/.test(password)) {
+  if (!/\d/.test(value)) {
+    
     showToast(
       "Validation",
       fieldname,
@@ -305,12 +306,62 @@ console.log('comes here')
 document.getElementById('signUpModal').addEventListener('submit',(event)=>{
   event.preventDefault();
 
+
+  
+
   if (usernameInput.value !== '' && emailInput.value !== '' && password1.value !== '' 
   && password2.value !==''&& usernameFlag !==1 && emailFlag !== 1
   && password2Flag !==1 && passwordFlag !==1
   ){
+
+     // Create a FormData object to serialize the form data
+     const formData = {
+      username: usernameInput.value,
+      email: emailInput.value,
+      password1: password1.value,
+      password2: password2.value,
+    };
+
+      
+    const csrfToken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+
+fetch("/signup/", {
+  method: "POST",
+  headers: {
+    "Content-Type": "application/json",
+    "X-CSRFToken": csrfToken, // Include the CSRF token in the header
+  },
+      body: JSON.stringify(formData),
+    })
+      .then((response) => {
+        if (response.ok) {
+          showToast('Account ','Created','Successfully','bg-success')
+          //redirect
+          
+            fetch(`/sign_in/?username=${username}&password=${password}`) // Use "&" to separate parameters
+              .then((res) => res.json()) // Removed extra braces
+              .then((res) => {
+                if (res.userLogin) {
+                  location.reload(); // Corrected the window reload
+                } else{
+                  
+        showToast('Account ','Login ','now.. ','bg-success')
+                }
+              });
+        }
+        
+      else {
+        showToast('Account ','Creation ','Failed ','bg-danger')
+      }
+        })
+        
+
+    
+      .catch((error) => {
+        showToast('Account ','Creation ','Failed ','bg-danger')
+      });
     
   }else{
-    showToast("Can't accept values",'Form','Give proper values ')
+    showToast('Account ','Creation ','Failed ','bg-danger')
   }
 })

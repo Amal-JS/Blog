@@ -1,4 +1,5 @@
 
+import json
 from django.http import  JsonResponse
 from django.shortcuts import redirect, render
 from . models import Post,Comment,User
@@ -53,3 +54,14 @@ def sign_out(request):
     logout(request)
     return redirect('index')
    
+
+def sign_up(request):
+    if request.method == 'POST':
+        data = request.body
+        p_data = json.loads(data)
+        print(p_data)
+        user = User(username=p_data['username'],email=p_data['email'],password=p_data['password1'])
+        user.save()
+        print(user.id)
+        return JsonResponse({'message':'Success'},status=200)
+    return JsonResponse({'message': 'Failed'}, status=404)
