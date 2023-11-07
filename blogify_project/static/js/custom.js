@@ -16,20 +16,10 @@ function showToast(activity="Validation",fieldname, value,bgColor='bg-danger') {
   <div class="d-flex justify-content-evenly">
     <small class="text-white mx-3">just now</small>
   <button type="button" class="btn-close btn-close-white me-2 m-auto fw-3" data-bs-dismiss="toast" aria-label="Close"></button>
-  
   </div>
-  
-  
   </div>
   <div class="toast-body  ${bgColor}">
-  
-  ${fieldname} : ${value}
-  
-  
-  
-  </div>
-  
-  `;
+  ${fieldname} : ${value}</div>`;
   
   toastContainer.appendChild(toastElement);
   
@@ -84,9 +74,16 @@ const usernameInput = document.getElementById('username');
 const emailInput = document.querySelector('#email')
 const password1 = document.querySelector('#password1')
 const password2 = document.querySelector('#password2')
-
+let usernameFlag;
+let emailFlag;
+let passwordFlag;
+let password2Flag;
 
 usernameInput.addEventListener("blur", () => {
+  usernameFlag = 0;
+  usernameInput.classList.remove('bg-danger')
+  usernameInput.style.border = '1px solid #ced4da;'
+  usernameInput.style.color='black';
   const fieldname = "Username"; // Replace with the appropriate field name
   const value = usernameInput.value; // Get the input value
   console.log(value)
@@ -100,6 +97,7 @@ usernameInput.addEventListener("blur", () => {
         
         
       );
+      usernameFlag = 1;
     }
     if (value.length < 5) {
       console.log('-----------------',value)
@@ -110,8 +108,18 @@ usernameInput.addEventListener("blur", () => {
         
         
       );
+      usernameFlag = 1;
     }
+
+  }else{
+    usernameFlag =1;
   }
+  if (usernameFlag === 1){
+    usernameInput.style.border='2px solid white';
+    usernameInput.classList.add('bg-danger')
+    usernameInput.style.color='white';
+  }
+
 }); 
 
 
@@ -232,3 +240,7 @@ console.log('comes here')
     }
   });
 });
+
+
+//=================================== User Sign UP ===========================================
+
