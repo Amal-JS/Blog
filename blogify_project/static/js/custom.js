@@ -26,6 +26,36 @@ function showToast(activity="Validation",fieldname, value,bgColor='bg-danger') {
   const toast = new bootstrap.Toast(toastElement);
   toast.show();
   }
+
+
+//============================== Sign Up form validation styling ============================
+let usernameFlag=0;
+let emailFlag=0;
+let passwordFlag=0;
+let password2Flag=0;
+
+
+// Get input element
+const usernameInput = document.getElementById('username');
+const emailInput = document.querySelector('#email')
+const password1 = document.querySelector('#password1')
+const password2 = document.querySelector('#password2')
+
+function signUpStyling(fieldInput, flag, fieldFlag) {
+  if (flag !== 1) {
+   
+    fieldFlag = 0;
+    fieldInput.classList.remove('bg-danger');
+    fieldInput.style.border = '1px solid #ced4da';
+    fieldInput.style.color = 'black';
+  } else {
+    fieldFlag = 1;
+    fieldInput.style.border = '2px solid white';
+    fieldInput.classList.add('bg-danger');
+    fieldInput.style.color = 'white';
+  }
+  return fieldFlag; // Return the updated fieldFlag value
+}
   
 
 document.addEventListener('DOMContentLoaded', function() {
@@ -69,21 +99,12 @@ document.addEventListener('DOMContentLoaded', function() {
   }
     
 
-// Get input element
-const usernameInput = document.getElementById('username');
-const emailInput = document.querySelector('#email')
-const password1 = document.querySelector('#password1')
-const password2 = document.querySelector('#password2')
-let usernameFlag;
-let emailFlag;
-let passwordFlag;
-let password2Flag;
+
+
 
 usernameInput.addEventListener("blur", () => {
-  usernameFlag = 0;
-  usernameInput.classList.remove('bg-danger')
-  usernameInput.style.border = '1px solid #ced4da;'
-  usernameInput.style.color='black';
+  usernameFlag = signUpStyling(usernameInput, 0, usernameFlag); // Update emailFlag with the returned value
+  flag = 0;
   const fieldname = "Username"; // Replace with the appropriate field name
   const value = usernameInput.value; // Get the input value
   console.log(value)
@@ -97,7 +118,7 @@ usernameInput.addEventListener("blur", () => {
         
         
       );
-      usernameFlag = 1;
+      flag = 1;
     }
     if (value.length < 5) {
       console.log('-----------------',value)
@@ -108,44 +129,45 @@ usernameInput.addEventListener("blur", () => {
         
         
       );
-      usernameFlag = 1;
+      flag = 1;
     }
 
-  }else{
-    usernameFlag =1;
+  } else {
+    flag=1;
   }
-  if (usernameFlag === 1){
-    usernameInput.style.border='2px solid white';
-    usernameInput.classList.add('bg-danger')
-    usernameInput.style.color='white';
+  if (flag ===1){
+    usernameFlag = signUpStyling(usernameInput, 1, usernameFlag); 
   }
 
 }); 
 
-
 emailInput.addEventListener("blur", () => {
-  const fieldname = "Email"; // Replace with the appropriate field name
-  const value = emailInput.value; // Get the input value
+  const fieldname = "Email";
+  const value = emailInput.value;
+  emailFlag = signUpStyling(emailInput, 0, emailFlag); // Update emailFlag with the returned value
+  flag = 0;
 
   if (value !== "") {
-if (!/^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$/.test(value)) {
-showToast(
-  "Validation",
-fieldname,
-"Please enter a valid email address",
+    if (!/^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$/.test(value)) {
+      showToast("Validation", fieldname, "Please enter a valid email address");
+      flag = 1;
+    }
+  } else {
+    flag = 1;
+  }
 
+  if (flag === 1) {
+    emailFlag = signUpStyling(emailInput, 1, emailFlag); // Update emailFlag again
+  }
 
-);
-}
-}
+  
 });
-
-
 
 password1.addEventListener("blur", () => {
   const fieldname = "Password"; // Replace with the appropriate field name
   const value = password1.value; // Get the input value
-
+  passwordFlag = signUpStyling(password1, 0, passwordFlag); // Update emailFlag with the returned value
+  flag = 0;
   if (password1.value !== "") {
     
     if (password1.value.length < 5) {
@@ -156,7 +178,36 @@ password1.addEventListener("blur", () => {
         
         
       );
+      flag=1;
     }
+     // Check if the password contains at least one numeric character
+  if (!/\d/.test(password)) {
+    showToast(
+      "Validation",
+      fieldname,
+      "Password must contain at least one numeric character"
+    );
+    flag = 1;
+  }
+
+  // Check if the password is similar to the username
+  const username = usernameInput.value;
+
+  if (value.includes(username)) {
+    showToast(
+      "Validation",
+      fieldname,
+      "Password cannot be similar to the username"
+    );
+    flag = 1;
+    console.log('enters the function')
+  }
+  }
+  else {
+    flag=1;
+  }
+  if (flag ===1){
+    passwordFlag = signUpStyling(password1, 1, passwordFlag); 
   }
 });
 
@@ -165,7 +216,8 @@ password1.addEventListener("blur", () => {
 password2.addEventListener("blur", () => {
   const fieldname = "Confirm Password"; // Replace with the appropriate field name
   const value = password2.value; // Get the input value
-
+  password2Flag = signUpStyling(password2, 0, password2Flag); // Update emailFlag with the returned value
+  flag = 0;
   if (password2.value !== "") {
     
     if (password2.value !== password1.value) {
@@ -175,8 +227,15 @@ password2.addEventListener("blur", () => {
         "Passwords not matching",
       
       );
+      flag=1;
     }
    
+  }
+  else {
+    flag=1;
+  }
+  if (flag ===1){
+    password2Flag = signUpStyling(password2, 1, password2Flag); 
   }
 });
 
@@ -243,4 +302,15 @@ console.log('comes here')
 
 
 //=================================== User Sign UP ===========================================
+document.getElementById('signUpModal').addEventListener('submit',(event)=>{
+  event.preventDefault();
 
+  if (usernameInput.value !== '' && emailInput.value !== '' && password1.value !== '' 
+  && password2.value !==''&& usernameFlag !==1 && emailFlag !== 1
+  && password2Flag !==1 && passwordFlag !==1
+  ){
+    
+  }else{
+    showToast("Can't accept values",'Form','Give proper values ')
+  }
+})
