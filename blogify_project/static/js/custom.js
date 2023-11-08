@@ -42,6 +42,7 @@ const password1 = document.querySelector('#password1')
 const password2 = document.querySelector('#password2')
 
 function signUpStyling(fieldInput, flag, fieldFlag) {
+  console.log('signup styling called')
   if (flag !== 1) {
    
     fieldFlag = 0;
@@ -107,7 +108,7 @@ usernameInput.addEventListener("blur", () => {
   flag = 0;
   const fieldname = "Username"; // Replace with the appropriate field name
   const value = usernameInput.value; // Get the input value
-  console.log(value)
+ 
   if (value !== "") {
     
     if (!/^[a-zA-Z0-9]+$/.test(value)) {
@@ -135,6 +136,25 @@ usernameInput.addEventListener("blur", () => {
   } else {
     flag=1;
   }
+
+  fetch(`/username_check/?username=${value}`)
+  .then((res)=>res.json())
+  .then((res)=>{
+
+    if(res.userNameExist){
+
+      showToast(
+        "Validation",
+        fieldname,
+        "Username already exists.Try new one.",
+        
+        
+      );
+      flag =1;
+      usernameFlag = signUpStyling(usernameInput, 1, usernameFlag); 
+    }
+
+  })
   if (flag ===1){
     usernameFlag = signUpStyling(usernameInput, 1, usernameFlag); 
   }
@@ -338,7 +358,7 @@ fetch("/signup/", {
           showToast('Account ','Created','Successfully','bg-success')
           //redirect
           
-            fetch(`/sign_in/?username=${username}&password=${password}`) // Use "&" to separate parameters
+            fetch(`/sign_in/?username=${usernameInput.value}&password=${password1.value}`) // Use "&" to separate parameters
               .then((res) => res.json()) // Removed extra braces
               .then((res) => {
                 if (res.userLogin) {

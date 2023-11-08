@@ -5,6 +5,7 @@ from django.shortcuts import redirect, render
 from . models import Post,Comment,User
 from django.db.models import F
 from django.contrib.auth import authenticate,login,logout
+from django.contrib.auth.hashers import make_password, check_password
 
 def index(request):
     posts = Post.objects.order_by('-created', '-rating')
@@ -55,13 +56,28 @@ def sign_out(request):
     return redirect('index')
    
 
+def username_check(request):
+    username = request.GET.get('username',None)
+    print(User.objects.all())
+    print(username,'   ',User.objects.filter(username=username).exists())
+    if username != '' and username is not None and  User.objects.filter(username=username).exists():
+        
+        return JsonResponse({'userNameExist':True})
+
+    return JsonResponse({'userNameExist':False})
+
+
 def sign_up(request):
     if request.method == 'POST':
         data = request.body
         p_data = json.loads(data)
-        print(p_data)
-        user = User(username=p_data['username'],email=p_data['email'],password=p_data['password1'])
+        
+        hashed_password = make_password(p_data['password1'])
+        user = User(username=p_data['username'],email=p_data['email'],password=hashed_password)
+        print(user.username,user.password)
         user.save()
         print(user.id)
         return JsonResponse({'message':'Success'},status=200)
     return JsonResponse({'message': 'Failed'}, status=404)
+
+

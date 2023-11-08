@@ -8,6 +8,8 @@ path('search/',views.search,name="search"),
 
 path('sign_in/',views.sign_in,name='signin'),
 path('sign_out/',views.sign_out,name='signout'),
-path('signup/',views.sign_up)
+path('signup/',views.sign_up),
+path('username_check/',views.username_check),
+
 
 ]
