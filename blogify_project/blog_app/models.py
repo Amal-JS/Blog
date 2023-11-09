@@ -12,6 +12,9 @@ class Post(models.Model):
 
     def __str__(self):
         return f"{self.post_name} : author ==> {self.user}"
+    
+
+    
 
 class Comment(models.Model):
     user = models.ForeignKey(User,on_delete=models.CASCADE)
@@ -21,3 +24,6 @@ class Comment(models.Model):
 
     def __str__(self) -> str:
         return f" commented by : { self.user} on post {self.post.post_name}"
+    
+
+   

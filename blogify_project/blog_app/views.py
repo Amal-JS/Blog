@@ -6,6 +6,7 @@ from . models import Post,Comment,User
 from django.db.models import F
 from django.contrib.auth import authenticate,login,logout
 from django.contrib.auth.hashers import make_password, check_password
+from . forms import CommentForm
 
 def index(request):
     posts = Post.objects.order_by('-created', '-rating')
@@ -13,9 +14,11 @@ def index(request):
     return render(request,'index.html',{'posts':posts})
 
 def post(request,id):
+   
     post = Post.objects.get(id=id)
     comments = Comment.objects.filter(post=post)
-    context = {'post':post,'comments':comments}
+    user_can_add_review = Comment.objects.filter(user=request.user,post=post).exists()
+    context = {'post':post,'comments':comments,'user_can_add_review':user_can_add_review}
     return render(request,'post.html',context)
 
 def search(request):
@@ -81,3 +84,23 @@ def sign_up(request):
     return JsonResponse({'message': 'Failed'}, status=404)
 
 
+def add_review(request,post_id):
+    print('comes to comment adding')
+    
+    if request.method == 'POST':
+        p_data ={
+
+        'post' : Post.objects.get(id=post_id),
+        'user' : User.objects.get(id=request.user.id),
+        'desc' : request.POST.get('desc'),
+        'review' : request.POST.get('review')
+        
+        }
+        form = CommentForm(p_data)
+        print(p_data)
+
+        if form.is_valid():
+            form.save()
+        else:
+            print(form.errors)
+    return redirect('post',id=post_id)

@@ -1,7 +1,7 @@
 
 // Function to show a toast message
 function showToast(activity="Validation",fieldname, value,bgColor='bg-danger') {
-
+  console.log('show toast')
   const toastContainer = document.querySelector('.toast-container');
   const toastElement = document.createElement('div');
   toastElement.classList.add('toast');
@@ -25,6 +25,7 @@ function showToast(activity="Validation",fieldname, value,bgColor='bg-danger') {
   
   const toast = new bootstrap.Toast(toastElement);
   toast.show();
+ console.log(toastContainer)
   }
 
 
@@ -267,30 +268,6 @@ password2.addEventListener("blur", () => {
 
 
 
-//=====================================  post page ===========================================
-
-document.addEventListener('DOMContentLoaded', () => {
-
-
-    const review_stars = document.querySelectorAll('.fa-star');
-    if (review_stars){
-        
-    review_stars.forEach((element, index) => {
-        element.addEventListener('click', () => {
-            // Clear the 'checked' class for all stars before setting the new selection
-            review_stars.forEach((star, i) => {
-                if (i <= index) {
-                    star.classList.add('checked');
-                } else {
-                    star.classList.remove('checked');
-                }
-            });
-            console.log(`index : ${index+1}`)
-        });
-       
-    });
-    }
-});
 
 //==============================sign in ===================================================
 document.addEventListener('DOMContentLoaded', () => {
@@ -392,3 +369,67 @@ fetch("/signup/", {
     showToast('Account ','Creation ','Give acceptable values in the red boxes.','bg-danger')
   }
 })
+
+
+
+//=====================================  post page ===========================================
+
+
+//==================================== review adding in the form ============================
+document.addEventListener('DOMContentLoaded', () => {
+
+ 
+  showLabel=document.querySelector('#descEmptyInfo')
+  
+
+  if (showLabel){
+    showLabel.style.display='none';
+  }
+      let reviewRating = 0;
+  const review_stars = document.querySelectorAll('.add-form-stars');
+      
+  if (review_stars) {
+      review_stars.forEach((element, index) => {
+          element.addEventListener('click', () => {
+              // Clear the 'checked' class for all stars before setting the new selection
+              review_stars.forEach((star, i) => {
+                  if (i <= index) {
+                      star.classList.add('checked');
+                  } else {
+                      star.classList.remove('checked');
+                  }
+              });
+              reviewRating = index + 1;
+              
+              document.getElementById('starRating').value = reviewRating;
+          
+
+
+          
+              
+          });
+      });
+
+    }
+
+  let form = document.querySelector('#addCommentForm')
+  
+  if (form){
+  
+  form.addEventListener('submit', (event) => {
+      
+
+      if (document.querySelector('#addComment').value === ''){
+        console.log('empty')
+        showToast('Comment',"Cannot ",'Submit empty description','bg-danger')
+        showLabel=document.querySelector('#descEmptyInfo')
+        showLabel.style.display='block';
+        event.preventDefault();
+      }
+      
+      
+  });
+
+}
+  
+});

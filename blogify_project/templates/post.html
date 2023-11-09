@@ -38,26 +38,26 @@
         <div class="col-12 p-3 m-3 custom-shadow" >
         <p class="display-4">Comments</p>
 
-          {% if request.user != post.user  and user.is_authenticated %}
+          {% if request.user != post.user  and request.user.is_authenticated and  not user_can_add_review %}
 
-            <form class="w-50  p-3" style="border:1px solid black;">
+            <form class="w-50  p-3" style="border:1px solid black;" method="post" action="{% url 'add_review' post.id %}" id="addCommentForm">
                
-                
+              {% csrf_token %}
 
 
                   <div class="mb-3">
               
-                    <textarea class="form-control" id="inputComment" rows="3" placeholder="Add a comment"></textarea>
+                    <textarea class="form-control" id="addComment" rows="3" placeholder="Add a comment" name="desc"></textarea>
                   </div>
-
+                  <p class="text-danger mx-3" id="descEmptyInfo">Cannot submit empty form.</p>
                   <div class="mb-3 d-flex ">
-                    <span class="fa fa-star  main-page"></span>
-                    <span class="fa fa-star  main-page"></span>
-                    <span class="fa fa-star  main-page" ></span>
-                    <span class="fa fa-star main-page"></span>
-                    <span class="fa fa-star main-page"></span>
+                    <span class="fa fa-star  add-form-stars"></span>
+                    <span class="fa fa-star  add-form-stars"></span>
+                    <span class="fa fa-star  add-form-stars" ></span>
+                    <span class="fa fa-star add-form-stars"></span>
+                    <span class="fa fa-star add-form-stars"></span>
                 </div>
-                
+                <input type="number" class="d-none" name="review" id="starRating">
                 <button type="submit" class="btn btn-dark">Submit</button>
               </form>
 
@@ -140,14 +140,14 @@
       </div>
       
       <div class="modal-body">
-        <form class="  p-3" style="border:1px solid black;">
+        <!-- <form class="  p-3" style="border:1px solid black;">
                
                 
 
 
           <div class="mb-3">
       
-            <textarea class="form-control" id="inputComment" rows="3" placeholder="Add a comment"></textarea>
+            <textarea class="form-control" rows="3" placeholder="Add a comment"></textarea>
           </div>
   
           <div class="mb-3 d-flex ">
@@ -159,7 +159,7 @@
         </div>
         
        
-      </form>
+      </form> -->
   
       </div>
    
