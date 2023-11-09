@@ -358,16 +358,23 @@ fetch("/signup/", {
           showToast('Account ','Created','Successfully','bg-success')
           //redirect
           
-            fetch(`/sign_in/?username=${usernameInput.value}&password=${password1.value}`) // Use "&" to separate parameters
-              .then((res) => res.json()) // Removed extra braces
-              .then((res) => {
-                if (res.userLogin) {
-                  location.reload(); // Corrected the window reload
-                } else{
+          setTimeout(()=>{
+
+            fetch(`/sign_in/?username=${usernameInput.value}&password=${password1.value}`)
+            .then((res) => res.json())
+            .then((res) => {
+              if (res.userLogin) {
+                location.reload();
+              }
+              else{
                   
-        showToast('Account ','Login ','now.. ','bg-success')
-                }
-              });
+                showToast('Account ','Login ','now.. ','bg-success')
+                        }
+            });
+
+          },2000)
+
+            
         }
         
       else {
@@ -382,6 +389,6 @@ fetch("/signup/", {
       });
     
   }else{
-    showToast('Account ','Creation ','Failed ','bg-danger')
+    showToast('Account ','Creation ','Give acceptable values in the red boxes.','bg-danger')
   }
 })
