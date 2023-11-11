@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %} {{request.user}} {% endblock %}
+   
+{% block content %}
+    
+<div class="container">
+    <div class="row p-3 mt-2 d-flex">
+        <div class="col-3">
+            <img class="card-img p-3" src="{{user.img.url}}">
+        </div>
+        <div class="col-9 d=flex justify-content-center align-items-center">
+            <p class="fw-bold">{{request.user}}</p>
+        </div>
+    </div>
+
+    <div class="row"></div>
+</div>
+
+{% endblock %}
