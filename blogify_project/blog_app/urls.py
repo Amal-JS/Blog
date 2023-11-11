@@ -17,5 +17,7 @@ path('signup/',views.sign_up),
 path('username_check/',views.username_check),
 
 # add review
-path('add_review/<int:post_id>/',views.add_review,name='add_review')
+path('add_review/<int:post_id>/',views.add_review,name='add_review'),
+#delete review
+path('delete_review/<int:post_id>/<int:cmt_id>/',views.delete_review,name="delete_review"),
 ]

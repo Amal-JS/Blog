@@ -19,7 +19,7 @@ class Post(models.Model):
 class Comment(models.Model):
     user = models.ForeignKey(User,on_delete=models.CASCADE)
     post = models.ForeignKey(Post,on_delete=models.CASCADE)
-    review = models.IntegerField(default=0)
+    review = models.IntegerField(default=0,null=True,blank=True)
     desc = models.TextField()
 
     def __str__(self) -> str:

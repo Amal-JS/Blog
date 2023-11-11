@@ -104,3 +104,10 @@ def add_review(request,post_id):
         else:
             print(form.errors)
     return redirect('post',id=post_id)
+
+
+def delete_review(request,post_id,cmt_id):
+    cmt = Comment.objects.get(id=cmt_id)
+    cmt.delete()
+
+    return redirect('post',id=post_id)
