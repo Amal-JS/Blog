@@ -433,3 +433,59 @@ document.addEventListener('DOMContentLoaded', () => {
 }
   
 });
+
+
+//===================================== Comment Update ============================================
+
+if (window.location.pathname.startsWith('/post/')){
+document.addEventListener('DOMContentLoaded',()=>{
+  updateModalComment = document.querySelector('#updateCommentText')
+  updateCommentTextBtn = document.querySelector('#updateCommentTextBtn')
+
+  commentText = document.getElementById('commentText').innerText
+  commentReview = updateCommentTextBtn.getAttribute('rating-value')
+
+  updateCommentTextBtn.addEventListener('click',()=>{
+    
+    updateModalComment.innerHTML = commentText
+    ratingValue = commentReview
+
+    console.log(` comment text ${commentText} , comment review ${commentReview},${document.querySelectorAll('.update-review')}`)
+    ratingStarElement = document.querySelectorAll('.update-review')
+    
+      for(let i =0;i<5;i++){
+        ratingStarElement[i].classList.remove('checked', 'text-white');
+        if (i < ratingValue) {
+          
+          ratingStarElement[i].classList.add('checked');
+        } else {
+          ratingStarElement[i].classList.add('text-white');
+        }
+      }
+    
+
+    
+  })
+
+
+  //========================== upating review star ====================================
+
+  document.querySelectorAll('.update-review').forEach((element, index) => {
+    
+    element.addEventListener('click', () => {
+      console.log('up star getting clicked')
+        // Clear the 'checked' class for all stars before setting the new selection
+        document.querySelectorAll('.update-review').forEach((star, i) => {
+            if (i <= index) {
+                star.classList.add('checked');
+                star.classList.remove('text-white')
+            } else {
+                star.classList.remove('checked');
+                star.classList.add('text-white')
+            }
+        });
+    })
+  })
+})
+ 
+}
