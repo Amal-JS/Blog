@@ -438,7 +438,9 @@ document.addEventListener('DOMContentLoaded', () => {
 //===================================== Comment Update ============================================
 
 if (window.location.pathname.startsWith('/post/')){
+
 document.addEventListener('DOMContentLoaded',()=>{
+
   updateModalComment = document.querySelector('#updateCommentText')
   updateCommentTextBtn = document.querySelector('#updateCommentTextBtn')
 
@@ -468,12 +470,20 @@ document.addEventListener('DOMContentLoaded',()=>{
   })
 
 
+
+
+})
+
+
   //========================== upating review star ====================================
+
+  indexValue = 0;
+  ratingElement = document.querySelector('#starRatingUpdate')
 
   document.querySelectorAll('.update-review').forEach((element, index) => {
     
     element.addEventListener('click', () => {
-      console.log('up star getting clicked')
+     
         // Clear the 'checked' class for all stars before setting the new selection
         document.querySelectorAll('.update-review').forEach((star, i) => {
             if (i <= index) {
@@ -484,8 +494,35 @@ document.addEventListener('DOMContentLoaded',()=>{
                 star.classList.add('text-white')
             }
         });
+        indexValue = index+1;
+        ratingElement.innerText = indexValue
     })
+
+
   })
-})
+
+  //taking the updating form
+  let form = document.querySelector('#updateCommentForm')
+
+  showLabel=document.querySelector('#descEmptyInfoUpdate')
+  showLabel.style.display='none';
+
+  if (form){
+    
+  form.addEventListener('submit', (event) => {
+ 
+
+      if (document.querySelector('#updateCommentText').value === ''){
+        
+        showToast('Comment',"Cannot ",'Submit empty description','bg-danger')
+        showLabel=document.querySelector('#descEmptyInfoUpdate')
+        showLabel.style.display='block';
+        event.preventDefault();
+      }
+      
+      
+  });
+}
+
  
 }
