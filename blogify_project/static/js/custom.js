@@ -441,6 +441,21 @@ if (window.location.pathname.startsWith('/post/')){
 
 document.addEventListener('DOMContentLoaded',()=>{
 
+  //============================ showing review stars in comment if exist ==========================
+
+  reviewDivs = document.querySelectorAll('.reviewDiv')
+  reviewDivs.forEach((element,index)=>{
+    reviewValue = element.getAttribute('review-value')
+    if (reviewValue>0){
+      for(let i=0;i<reviewValue;i++){
+        star = document.createElement('span')
+        star.classList.add('fa','fa-star','text-dark')
+        element.appendChild(star)
+      
+      }
+    }
+  })
+
   updateModalComment = document.querySelector('#updateCommentText')
   updateCommentTextBtn = document.querySelector('#updateCommentTextBtn')
 
