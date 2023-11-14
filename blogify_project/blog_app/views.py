@@ -85,7 +85,7 @@ def sign_up(request):
 
 
 def add_review(request,post_id):
-    print('comes to comment adding')
+    
     
     if request.method == 'POST':
         p_data ={
@@ -109,5 +109,29 @@ def add_review(request,post_id):
 def delete_review(request,post_id,cmt_id):
     cmt = Comment.objects.get(id=cmt_id)
     cmt.delete()
+
+    return redirect('post',id=post_id)
+
+
+def edit_review(request,post_id,id):
+
+    if request.method == 'POST':
+        print(request.POST)
+        p_data ={
+
+        'post' : Post.objects.get(id=post_id),
+        'user' : User.objects.get(id=request.user.id),
+        'desc' : request.POST.get('desc') ,
+        'review' : request.POST.get('review') 
+        
+        }
+        instance = Comment.objects.get(id=id)
+        form = CommentForm(p_data,instance=instance)
+     
+
+        if form.is_valid():
+            form.save()
+        else:
+            print(form.errors)
 
     return redirect('post',id=post_id)

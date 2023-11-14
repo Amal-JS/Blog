@@ -20,4 +20,8 @@ path('username_check/',views.username_check),
 path('add_review/<int:post_id>/',views.add_review,name='add_review'),
 #delete review
 path('delete_review/<int:post_id>/<int:cmt_id>/',views.delete_review,name="delete_review"),
+#edit review 
+path('edit_review/<int:post_id>/<int:id>/',views.edit_review,name='edit_review'),
+
+
 ]

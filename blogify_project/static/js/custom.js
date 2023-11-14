@@ -495,7 +495,7 @@ document.addEventListener('DOMContentLoaded',()=>{
             }
         });
         indexValue = index+1;
-        ratingElement.innerText = indexValue
+        ratingElement.value = indexValue
     })
 
 
@@ -524,5 +524,6 @@ document.addEventListener('DOMContentLoaded',()=>{
   });
 }
 
+form.setAttribute('action',`/edit_review/${document.getElementById('updateCommentTextBtn').getAttribute('post-id')}/${document.getElementById('updateCommentTextBtn').getAttribute('comment-id')}/`)
  
 }
