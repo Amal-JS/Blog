@@ -23,5 +23,10 @@ path('delete_review/<int:post_id>/<int:cmt_id>/',views.delete_review,name="delet
 #edit review 
 path('edit_review/<int:post_id>/<int:id>/',views.edit_review,name='edit_review'),
 
+#post author page
+path('author/<int:id>/',views.author,name='author'),
+
+
+
 
 ]

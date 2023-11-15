@@ -89,10 +89,14 @@
                 <p class="card-title fw-bolder">{{post.post_name}}</p>
                 <p class="card-text">{{post.post_desc|slice:':100'}}</p>
                 <h5 class="card-title text-end">
+                  <a class="text-decoration-none text-dark" href="{% url 'author' post.user.id %}">
                   <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-fill text-dark mx-1" viewBox="0 0 16 16">
                     <path d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H3Zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z"/>
                   </svg>
-                  {{post.user}}
+                 {{post.user}}
+
+                  </a>
+                  
                 </h5>
                 <div class="text-center">
                   <a href="{% url 'post' post.id %}" class="btn btn-outline-secondary mt-3">View post</a>

@@ -456,33 +456,47 @@ document.addEventListener('DOMContentLoaded',()=>{
     }
   })
 
+
   updateModalComment = document.querySelector('#updateCommentText')
   updateCommentTextBtn = document.querySelector('#updateCommentTextBtn')
 
-  commentText = document.getElementById('commentText').innerText
-  commentReview = updateCommentTextBtn.getAttribute('rating-value')
+  commentText =''
+  if (document.getElementById('commentText')){
+    commentText = document.getElementById('commentText').innerText
+  }
 
-  updateCommentTextBtn.addEventListener('click',()=>{
-    
-    updateModalComment.innerHTML = commentText
-    ratingValue = commentReview
 
-    console.log(` comment text ${commentText} , comment review ${commentReview},${document.querySelectorAll('.update-review')}`)
-    ratingStarElement = document.querySelectorAll('.update-review')
+
+
+  if (updateCommentTextBtn){
+    commentReview = updateCommentTextBtn.getAttribute('rating-value')
+
+
+    updateCommentTextBtn.addEventListener('click',()=>{
     
-      for(let i =0;i<5;i++){
-        ratingStarElement[i].classList.remove('checked', 'text-white');
-        if (i < ratingValue) {
-          
-          ratingStarElement[i].classList.add('checked');
-        } else {
-          ratingStarElement[i].classList.add('text-white');
+      updateModalComment.innerHTML = commentText
+      ratingValue = commentReview
+  
+      console.log(` comment text ${commentText} , comment review ${commentReview},${document.querySelectorAll('.update-review')}`)
+      ratingStarElement = document.querySelectorAll('.update-review')
+      
+        for(let i =0;i<5;i++){
+          ratingStarElement[i].classList.remove('checked', 'text-white');
+          if (i < ratingValue) {
+            
+            ratingStarElement[i].classList.add('checked');
+          } else {
+            ratingStarElement[i].classList.add('text-white');
+          }
         }
-      }
-    
+      
+  
+      
+    })
 
-    
-  })
+  }
+ 
+  
 
 
 
@@ -537,8 +551,12 @@ document.addEventListener('DOMContentLoaded',()=>{
       
       
   });
+  if (document.getElementById('updateCommentTextBtn')){
+    form.setAttribute('action',`/edit_review/${document.getElementById('updateCommentTextBtn').getAttribute('post-id')}/${document.getElementById('updateCommentTextBtn').getAttribute('comment-id')}/`)
+ 
+  }
+ 
 }
 
-form.setAttribute('action',`/edit_review/${document.getElementById('updateCommentTextBtn').getAttribute('post-id')}/${document.getElementById('updateCommentTextBtn').getAttribute('comment-id')}/`)
- 
+
 }

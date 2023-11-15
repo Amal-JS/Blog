@@ -17,7 +17,10 @@ def post(request,id):
    
     post = Post.objects.get(id=id)
     comments = Comment.objects.filter(post=post)
-    user_can_add_review = Comment.objects.filter(user=request.user,post=post).exists()
+    user_can_add_review = True
+    if request.user.is_authenticated:
+        user_can_add_review = Comment.objects.filter(user=request.user,post=post).exists()
+
     context = {'post':post,'comments':comments,'user_can_add_review':user_can_add_review}
     return render(request,'post.html',context)
 
@@ -135,3 +138,7 @@ def edit_review(request,post_id,id):
             print(form.errors)
 
     return redirect('post',id=post_id)
+
+def author(request,id):
+
+    return render(request,'author.html')
