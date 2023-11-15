@@ -1,20 +1,45 @@
 {% extends 'base.html' %}
 {% load static %}
-{% block title %} {{request.user}} {% endblock %}
+{% block title %} {{author.username}} {% endblock %}
    
 {% block content %}
     
-<div class="container">
-    <div class="row p-3 mt-2 d-flex">
+<div class="container" >
+    <div class="row p-3 mt-2 d-flex h-50 mb-5" style="border-bottom: 4px solid burlywood; min-height: 350px;">
         <div class="col-3">
-            <img class="card-img p-3" src="{{user.img.url}}">
+            <img class="card-img p-3" src="{% if author.image %}{{user.img.url}}{% else %}{% static 'images/default.jpg' %}{% endif %}" style="border:1px solid black;">
+            
+            {% if not author.image %}
+            <a class="btn btn-secondary w-100" >Upload profile pic</a>
+            {% endif %}
         </div>
-        <div class="col-9 d=flex justify-content-center align-items-center">
-            <p class="fw-bold">{{request.user}}</p>
+        <div class="col-9 d-flex justify-content-center align-items-center">
+            <p class="display-4 m-2 fw-bold">{{author.username}}</p>
+
         </div>
     </div>
 
-    <div class="row"></div>
+    <div class="row mt-5">
+
+        {% for post in author_posts %}
+
+        <div class="col-6 mt-5 mb-5" style="height: 500px;box-shadow: 10px 10px 15px rgba(0, 0, 0, 0.5);">
+            <div class="m-3 p-2 d-flex align-items-center mx-5">
+                <div><img src="{{post.image.url}}" style="max-width:150px;max-height:100px;"></div>
+                <div class="mx-5"> <p class="display-6 text-dark">{{post.post_name}}</p></div>
+                
+            </div>
+            <div class="m-3 p-2">
+                <p class="m-5">{{post.post_desc|slice:':300' }}</p>
+            </div>
+            <div class="p-3 text-center"><a class="btn btn-warning" href="{% url 'post' post.id %}">View post</a></div>
+        </div>
+
+        {% endfor %}
+
+
+
+    </div>
 </div>
 
 {% endblock %}

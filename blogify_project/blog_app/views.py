@@ -140,5 +140,9 @@ def edit_review(request,post_id,id):
     return redirect('post',id=post_id)
 
 def author(request,id):
+    author = User.objects.get(id=id)
+    author_posts = Post.objects.filter(user=author)
 
-    return render(request,'author.html')
+    context =  {'author_posts':author_posts , 'author' :author}
+    
+    return render(request,'author.html' ,context)
