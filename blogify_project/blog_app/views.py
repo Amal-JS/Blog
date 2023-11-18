@@ -7,6 +7,8 @@ from django.db.models import F
 from django.contrib.auth import authenticate,login,logout
 from django.contrib.auth.hashers import make_password, check_password
 from . forms import CommentForm
+from django.db.models import Avg
+
 
 def index(request):
     posts = Post.objects.order_by('-created', '-rating')
@@ -142,7 +144,19 @@ def edit_review(request,post_id,id):
 def author(request,id):
     author = User.objects.get(id=id)
     author_posts = Post.objects.filter(user=author)
-
-    context =  {'author_posts':author_posts , 'author' :author}
+    total_no_of_posts = Post.objects.filter(user=author).count()
     
+    # Use aggregate with Avg to get the average review for all posts by the author
+    total_rating = Comment.objects.filter(post__user=author).aggregate(Avg('review'))
+
+    # The result of aggregate is a dictionary, so access the value using the key 'review__avg'
+    avg_review = total_rating.get('review__avg', 0)
+
+
+
+    context = {'author_posts': author_posts,
+                'author': author,
+                'total_no_of_posts': total_no_of_posts,
+                'avg_review': avg_review}
+
     return render(request,'author.html' ,context)
