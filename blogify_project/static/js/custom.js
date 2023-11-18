@@ -560,3 +560,35 @@ document.addEventListener('DOMContentLoaded',()=>{
 
 
 }
+
+
+//======================================= Author profile pic ======================================
+if(window.location.pathname.startsWith('/author')){
+  console.log('author page');
+  uploadProfilePicBtn = document.getElementById('uploadProfilePicBtn')
+  if (uploadProfilePicBtn){
+    uploadProfilePicBtn.addEventListener('click',()=>{
+      var fileLabel = document.querySelector('.custom-file-label');
+      var fileInput = document.querySelector('#imageInput');
+
+
+      fileInput.style.display = "none";
+  
+    
+      fileInput.click();
+     
+  
+      // Listen for changes in the file input
+      fileInput.addEventListener('change', function() {
+          if (fileInput.files.length > 0) {
+              // If a file is selected, update the label text
+              fileLabel.textContent = fileInput.files[0].name;
+          } else {
+              // If no file is chosen, reset the label text
+              fileLabel.textContent = 'Add images if any...';
+          }
+      });
+      
+    })
+  }
+}
