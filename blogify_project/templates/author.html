@@ -29,7 +29,7 @@
 
         <div class="col-6 mt-5 mb-5" style="height: 500px;box-shadow: 10px 10px 15px rgba(0, 0, 0, 0.5);">
             <div class="m-3 p-2 d-flex align-items-center mx-5">
-                <div><img src="{{post.image.url}}" style="max-width:150px;max-height:100px;"></div>
+                <div><img src="{% if post.image != '' %}{{post.image.url}} {% else %} {% static 'images/default.jpg' %} {% endif %}" style="max-width:150px;max-height:100px;"></div>
                 <div class="mx-5"> <p class="display-6 text-dark">{{post.post_name}}</p></div>
                 
             </div>

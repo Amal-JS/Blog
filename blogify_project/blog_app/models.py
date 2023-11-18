@@ -27,3 +27,9 @@ class Comment(models.Model):
     
 
    
+
+class UserImages(models.Model):
+    user = models.ForeignKey(User,on_delete=models.CASCADE)
+    image = models.ImageField(upload_to=('user_profile_images/'),blank=True,null=True)
+    def __str__(self) -> str:
+        return f" {self.user} profile pic"
